@@ -12,6 +12,7 @@ import net.minecraftforge.fml.common.Mod.Instance;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 @Mod(modid = BijisMod.MODID, name = "BijisMod", version = "0.1", acceptedMinecraftVersions = "[1.12.2]")
@@ -30,6 +31,7 @@ public class BijisMod {
     {
         logger = event.getModLog(); // initialise le logger.  event.getModLog() retourne un logger avec votre modid
         proxy.preInit(event.getSuggestedConfigurationFile());
+        NetworkRegistry.INSTANCE.newSimpleChannel("ForgeToBukkit");
         GameRegistry.registerWorldGenerator(new BijisGen(), 3);
         RegistryHandler.preInitRegistries(event);
     }
