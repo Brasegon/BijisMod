@@ -23,7 +23,7 @@ import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-@EventBusSubscriber(value = Side.CLIENT, modid = BijisMod.MODID)
+@EventBusSubscriber(modid = BijisMod.MODID)
 public class EventHandlerCommon
 {
     /*
@@ -35,11 +35,12 @@ public class EventHandlerCommon
     	if (event.getGui() instanceof GuiHopper) {
     		
     		System.out.println("Block Cassé");
-    		ByteArrayDataOutput out = ByteStreams.newDataOutput();
-    		out.writeInt(10);
-    		NetHandlerPlayClient nhpc = Minecraft.getMinecraft().getConnection();
-    		CPacketCustomPayload packet = new CPacketCustomPayload("test:init", new PacketBuffer(Unpooled.copiedBuffer(out.toByteArray())));
-    		nhpc.sendPacket(packet);
+    		BijisMod.network.sendToServer(new MyMessage("foobar"));
+//    		ByteArrayDataOutput out = ByteStreams.newDataOutput();
+//    		out.writeInt(10);
+//    		NetHandlerPlayClient nhpc = Minecraft.getMinecraft().getConnection();
+//    		CPacketCustomPayload packet = new CPacketCustomPayload("test:init", new PacketBuffer(Unpooled.copiedBuffer(out.toByteArray())));
+//    		nhpc.sendPacket(packet);
     	}
     }
 }
