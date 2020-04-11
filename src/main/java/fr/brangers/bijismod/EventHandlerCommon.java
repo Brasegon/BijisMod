@@ -38,7 +38,7 @@ public class EventHandlerCommon
     		ByteArrayDataOutput out = ByteStreams.newDataOutput();
     		out.writeInt(10);
     		NetHandlerPlayClient nhpc = Minecraft.getMinecraft().getConnection();
-    		CPacketCustomPayload packet = new CPacketCustomPayload("ForgeToBukkit", new PacketBuffer(Unpooled.copiedBuffer(out.toByteArray())));
+    		CPacketCustomPayload packet = new CPacketCustomPayload("test:init", new PacketBuffer(Unpooled.copiedBuffer(out.toByteArray())));
     		nhpc.sendPacket(packet);
     	}
     }
