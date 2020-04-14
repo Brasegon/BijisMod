@@ -1,18 +1,19 @@
-package fr.brangers.bijismod;
+package fr.brangers.bijismod.network;
 
+import fr.brangers.bijismod.BijisMod;
 import io.netty.buffer.ByteBuf;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
-public class MyMessage implements IMessage{
+public class GetMoney implements IMessage{
 	
 	private String text;
 	 
-    public MyMessage() { }
+    public GetMoney() { }
  
-    public MyMessage(String text) {
+    public GetMoney(String text) {
         this.text = text;
     }
 	@Override
@@ -24,13 +25,13 @@ public class MyMessage implements IMessage{
 	@Override
 	public void toBytes(ByteBuf buf) {
 		// TODO Auto-generated method stub
-		ByteBufUtils.writeUTF8String(buf, "Salut lol");
+		ByteBufUtils.writeUTF8String(buf, "Get Money");
 	}
 	
-	public static class Handler implements IMessageHandler <MyMessage, IMessage> {
+	public static class Handler implements IMessageHandler <GetMoney, IMessage> {
 		 
         @Override
-        public IMessage onMessage(MyMessage message, MessageContext ctx) {
+        public IMessage onMessage(GetMoney message, MessageContext ctx) {
             System.out.println(String.format("Received %s", message.text));
             BijisMod.money = message.text;
             return null; // no response in this case

@@ -1,9 +1,10 @@
-package fr.brangers.bijismod;
+package fr.brangers.bijismod.handlers;
 
 import java.awt.Color;
 
 import org.lwjgl.opengl.GL11;
 
+import fr.brangers.bijismod.BijisMod;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.ScaledResolution;
@@ -26,8 +27,6 @@ public class GameOverlayHandler
     @SubscribeEvent
     public static void renderGameOverlayPre(RenderGameOverlayEvent.Pre event)
     {
-        if(event.getType().equals(ElementType.HEALTH))
-            event.setCanceled(true);
     }
 
     @SubscribeEvent
