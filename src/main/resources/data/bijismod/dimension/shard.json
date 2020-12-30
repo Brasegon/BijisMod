@@ -1,0 +1,13 @@
+{
+  "generator": {
+    "type": "minecraft:noise",
+    "seed": 286956243,
+    "biome_source": {
+      "type": "minecraft:fixed",
+      "seed": 286956243,
+      "biome": "bijismod:test"
+    },
+    "settings": "bijismod:shard_noise"
+  },
+  "type": "bijismod:shard_type"
+}

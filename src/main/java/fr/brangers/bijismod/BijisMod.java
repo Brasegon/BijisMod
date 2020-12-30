@@ -1,61 +1,73 @@
 package fr.brangers.bijismod;
 
-
-import java.util.EnumMap;
-
+import fr.brangers.bijismod.init.Registration;
+import net.minecraft.block.Blocks;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.InterModComms;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
+import net.minecraftforge.fml.event.lifecycle.InterModProcessEvent;
+import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
+import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import fr.brangers.bijismod.Entity.EntitySeat;
-import fr.brangers.bijismod.handlers.RegistryHandler;
-import fr.brangers.bijismod.network.GetMoney;
-import fr.brangers.bijismod.network.SitServer;
-import fr.brangers.bijismod.proxy.BijisModCommon;
-import fr.brangers.bijismod.server.generator.BijisGen;
-import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.Mod.EventHandler;
-import net.minecraftforge.fml.common.Mod.Instance;
-import net.minecraftforge.fml.common.SidedProxy;
-import net.minecraftforge.fml.common.event.FMLInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import net.minecraftforge.fml.common.network.FMLEmbeddedChannel;
-import net.minecraftforge.fml.common.network.NetworkRegistry;
-import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
-import net.minecraftforge.fml.common.registry.EntityRegistry;
-import net.minecraftforge.fml.common.registry.GameRegistry;
-import net.minecraftforge.fml.relauncher.Side;
+import java.util.stream.Collectors;
 
-@Mod(modid = BijisMod.MODID, name = "BijisMod", version = "0.1", acceptedMinecraftVersions = "[1.12.2]")
+@Mod("bijismod")
 public class BijisMod {
-	public static final String MODID = "bijismod";
-	public static String money;
-	@Instance(BijisMod.MODID)
-	public static BijisMod instance;
-	@SidedProxy(clientSide = "fr.brangers.bijismod.proxy.BijisModClient", serverSide = "fr.brangers.bijismod.proxy.BijisModServer")
-    public static BijisModCommon proxy;
-	
-	public static Logger logger;
+    public static final Logger LOGGER = LogManager.getLogger();
+    public static final String modid = "bijismod";
+    public BijisMod() {
+        // Register the setup method for modloading
+        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
+        // Register the enqueueIMC method for modloading
+        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::enqueueIMC);
+        // Register the processIMC method for modloading
+        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::processIMC);
+        // Register the doClientStuff method for modloading
+        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::doClientStuff);
 
-	public static SimpleNetworkWrapper network;
-	public static SimpleNetworkWrapper network2;
-	 
-    @EventHandler
-    public void preInit(FMLPreInitializationEvent event)
-    {
-        logger = event.getModLog(); // initialise le logger.  event.getModLog() retourne un logger avec votre modid
-        proxy.preInit(event.getSuggestedConfigurationFile());
-        network = NetworkRegistry.INSTANCE.newSimpleChannel("bijis:money");
-        network.registerMessage(GetMoney.Handler.class, GetMoney.class, 0, Side.CLIENT);
-        network2 = NetworkRegistry.INSTANCE.newSimpleChannel("sit");
-        network2.registerMessage(SitServer.Handler.class, SitServer.class, 0, Side.SERVER);
-        GameRegistry.registerWorldGenerator(new BijisGen(), 3);
-        RegistryHandler.preInitRegistries(event);
+        Registration.register();
+        // Register ourselves for server and other game events we are interested in
+        MinecraftForge.EVENT_BUS.register(this);
     }
- 
-    @EventHandler
-    public void init(FMLInitializationEvent event)
+
+    private void setup(final FMLCommonSetupEvent event)
     {
-    	proxy.init();
-    	EntityRegistry.registerModEntity(new ResourceLocation("cfm:mountable_block"), EntitySeat.class, "MountableBlock", 0, this, 80, 1, false);
+        // some preinit code
+        LOGGER.info("HELLO FROM PREINIT");
+        LOGGER.info("DIRT BLOCK >> {}", Blocks.DIRT.getRegistryName());
     }
+
+    private void doClientStuff(final FMLClientSetupEvent event) {
+        // do something that can only be done on the client
+        LOGGER.info("Got game settings {}", event.getMinecraftSupplier().get().gameSettings);
+    }
+
+    private void enqueueIMC(final InterModEnqueueEvent event)
+    {
+        // some example code to dispatch IMC to another mod
+        InterModComms.sendTo("bijismod", "helloworld", () -> { LOGGER.info("Hello world from the MDK"); return "Hello world";});
+    }
+
+    private void processIMC(final InterModProcessEvent event)
+    {
+        // some example code to receive and process InterModComms from other mods
+        LOGGER.info("Got IMC {}", event.getIMCStream().
+                map(m->m.getMessageSupplier().get()).
+                collect(Collectors.toList()));
+    }
+    // You can use SubscribeEvent and let the Event Bus discover methods to call
+    @SubscribeEvent
+    public void onServerStarting(FMLServerStartingEvent event) {
+        // do something when the server starts
+        LOGGER.info("HELLO from server starting");
+    }
+
+    // You can use EventBusSubscriber to automatically subscribe events on the contained class (this is subscribing to the MOD
+    // Event bus for receiving Registry Events)
 }
