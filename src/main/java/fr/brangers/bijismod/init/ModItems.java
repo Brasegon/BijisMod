@@ -19,7 +19,5 @@ public class ModItems {
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, BijisMod.modid);
 
 
-    public static final RegistryObject<Item> ROCK_ITEMS = ITEMS.register("rock",
-            () -> new BlockItem(ModBlock.ROCK_BLOCK.get(), new Item.Properties().group(ItemGroup.BUILDING_BLOCKS)));
 
 }

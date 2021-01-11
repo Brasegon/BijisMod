@@ -3,16 +3,25 @@ package fr.brangers.bijismod.init;
 import fr.brangers.bijismod.BijisMod;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
+import net.minecraft.block.OreBlock;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
+import net.minecraft.item.BlockItem;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemGroup;
+import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.IForgeRegistry;
 
 public class ModBlock {
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, BijisMod.modid);
 
-    public static final RegistryObject<Block> ROCK_BLOCK = BLOCKS.register("rock",
-            () -> new Block(AbstractBlock.Properties.create(Material.WOOD).sound(SoundType.ANVIL)));
+    public static final RegistryObject<Block> KUBIUM_ORE = Registration.register("kubium_ore",
+            new OreBlock(AbstractBlock.Properties.create(Material.ROCK)));
+
+
 
 }
