@@ -1,6 +1,7 @@
 package fr.brangers.bijismod;
 
 import fr.brangers.bijismod.init.Registration;
+import fr.brangers.bijismod.world.generation.OreGeneration;
 import net.minecraft.block.Blocks;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -40,6 +41,7 @@ public class BijisMod {
     {
         // some preinit code
         LOGGER.info("HELLO FROM PREINIT");
+        OreGeneration.registerOres();
         LOGGER.info("DIRT BLOCK >> {}", Blocks.DIRT.getRegistryName());
     }
 
