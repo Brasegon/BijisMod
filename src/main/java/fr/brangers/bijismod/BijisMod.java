@@ -34,6 +34,7 @@ public class BijisMod {
 
         Registration.register();
         // Register ourselves for server and other game events we are interested in
+        MinecraftForge.EVENT_BUS.register(OreGeneration.class);
         MinecraftForge.EVENT_BUS.register(this);
     }
 

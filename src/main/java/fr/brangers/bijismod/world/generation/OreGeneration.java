@@ -22,7 +22,7 @@ public class OreGeneration {
 
     private static final ArrayList<ConfiguredFeature<?, ?>> overworldOres = new ArrayList<ConfiguredFeature<?, ?>>();
 
-    
+
 
     public static void registerOres() {
         overworldOres.add(register("kubium_ore", Feature.ORE.withConfiguration(new OreFeatureConfig(
