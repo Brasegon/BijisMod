@@ -24,6 +24,7 @@ public class Registration {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
         ModBlock.BLOCKS.register(modEventBus);
         ModItems.ITEMS.register(modEventBus);
+        ModBlock.FEATURES.register(modEventBus);
     }
 
     public static RegistryObject<Block> register(String name, Block block) {
