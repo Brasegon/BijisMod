@@ -42,7 +42,10 @@ public class BijisMod {
     {
         // some preinit code
         LOGGER.info("HELLO FROM PREINIT");
-        OreGeneration.registerOres();
+        event.enqueueWork(() -> {
+            OreGeneration.registerConfigFeatures();
+            OreGeneration.registerOres();
+        });
         LOGGER.info("DIRT BLOCK >> {}", Blocks.DIRT.getRegistryName());
     }
 

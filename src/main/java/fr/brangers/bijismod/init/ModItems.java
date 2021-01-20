@@ -19,6 +19,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 public class ModItems {
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, BijisMod.modid);
 
-
+    public static final RegistryObject<Item> KUBIUM_INGOT = Registration.register("kubium_ingot",
+            new Item((new Item.Properties()).group(Registration.SOCIAL_KUB)));
 
 }

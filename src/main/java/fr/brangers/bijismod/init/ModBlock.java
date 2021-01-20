@@ -21,6 +21,7 @@ import java.util.function.Supplier;
 public class ModBlock {
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, BijisMod.modid);
 
+
     public static final DeferredRegister<Feature<?>> FEATURES = DeferredRegister.create(ForgeRegistries.FEATURES, BijisMod.modid);
 
     public static final RegistryObject<Block> KUBIUM_ORE = Registration.register("kubium_ore",
